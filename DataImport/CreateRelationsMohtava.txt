@@ -1,0 +1,6 @@
+//course and mohtava
+begin
+MATCH (a:دوره),(b:محتوا) 
+WHERE (a.كد_دوره_در_نفت=b.كد_دوره_در_نفت)
+CREATE a-[r:سرفصلها]->b;
+commit

@@ -1,0 +1,13 @@
+begin
+MATCH (gorooh:گروه)-[r]-()
+delete gorooh,r;
+commit
+begin
+MATCH (gorooh:گروه)
+delete gorooh;
+commit
+begin
+MATCH (dore:دوره) where has(dore.كد_تخصصي) WITH DISTINCT dore.كد_تخصصي as code,dore.عنوان_گروه_تخصصي as onven
+CREATE (n:گروه {
+كد_تخصصي: code , عنوان_گروه_تخصصي : onven });
+commit
