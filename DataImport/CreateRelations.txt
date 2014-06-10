@@ -6,13 +6,13 @@ DELETE r;
 commit
 //2-rel between rfpc and setad
 begin
-MATCH (a:بانک_دورهها), (b:دورههاي_وزارت)
+MATCH (a:root), (b:coding)
 CREATE a-[r:کدگذاري]->b;
 commit
 //3-rel between setad and gorooh
 begin
-MATCH (a:دورههاي_وزارت), (b:گروه)
-CREATE a-[r:گروه تخصصي]->b;
+MATCH (a:coding), (b:گروه)
+CREATE a-[r:گروه_تخصصي]->b;
 commit
 //4-rel between gorooh and course
 begin
@@ -34,7 +34,6 @@ CREATE b-[r:پيش_نياز]->a;
 commit
 //9-count
 begin
-START a=node(*)
 MATCH (a:دوره)
 RETURN COUNT(a);
 commit
