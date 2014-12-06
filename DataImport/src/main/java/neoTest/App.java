@@ -161,6 +161,8 @@ public class App
             String values[] =alCodes.get(counter);
             if(values[1].length()==4 || values[1].length()==1)
               values[1]='0'+values[1];
+            if(values[1].length()==5)
+              values[2]='"'+values[1]+'"'; //New Version
             if(values[2].equals("")) //check if code_dore is null
             {
               if(values[1].length()==5) //build code_dore from tartib
@@ -202,11 +204,23 @@ public class App
                 conststant=true;
               }
               else
-                System.out.println("not consistant gorooh="+values[3]+" tartib="+values[1]);
+                if(values[3].substring(1,3).equals(values[1].substring(0,2)))
+                {
+                  values[1]=Integer.toString(Integer.parseInt(values[1])-Integer.parseInt(values[3].substring(1,4))*100);
+                  conststant=true;
+                }
+                else
+                  System.out.println("not consistant gorooh="+values[3]+" tartib="+values[1]);
             else
               conststant=true;
             //chck that code_dore & tartib & gorooh consistant
-            if (!(conststant && values[3].length()==5 && values[2].equals(values[3].substring(0,4)+values[1]+'"')))
+            if (conststant)
+              if (values[3].length()!=5)
+                conststant=false;
+              else
+                if (Integer.parseInt(values[2].substring(1,6))!=Integer.parseInt(values[3].substring(1,4))*100+Integer.parseInt(values[1]))
+                  conststant=false;
+            if (!conststant)
             {
               System.out.println("not consistant gorooh="+values[3]+" code="+values[2]+" tartib="+values[1]);
               conststant=false;
@@ -242,7 +256,7 @@ public class App
             counter++;
           }
           // dispose all the resources after using them.
-          System.out.println("END! error found="+cNonConsistant);
+          System.out.println("END! number of errors found="+cNonConsistant);
           alEquCodes.clear();
           alCodes.clear();
           out.close();
